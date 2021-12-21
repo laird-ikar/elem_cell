@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:32:49 by bguyot            #+#    #+#             */
-/*   Updated: 2021/12/20 22:40:07 by bguyot           ###   ########.fr       */
+/*   Updated: 2021/12/21 13:13:20 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ft_rand(void);
 int		ft_strlen(char *str);
 int		ft_atoi(char *str);
 int		ft_isspace(char c);
+int		ft_strcmp(char *str1, char *str2);
 
 char	*ft_strcat(char *dest, char *src);
 
