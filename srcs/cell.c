@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 20:49:31 by bguyot            #+#    #+#             */
-/*   Updated: 2021/12/21 01:39:54 by bguyot           ###   ########.fr       */
+/*   Updated: 2021/12/21 01:57:33 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,19 @@ void	tomorrow(char atoms[2], t_world yesterday,
 	int		gods_memory;
 
 	i = 0;
+	today.matter = NULL;
 	while (i < yesterday.size)
 		ft_putchar(atoms[yesterday.matter[i++]]);
 	ft_putchar('\n');
 	if (doomsday > 0 && yesterday.size)
 	{
 		today.size = yesterday.size;
-		i = 0;
-		while (i < today.size)
-		{
-			if (i == 0 && i == today.size - 1)
-				gods_memory = rule[yesterday.matter[i] * 2];
-			else if (i == 0)
-				gods_memory = rule[yesterday.matter[i] * 2
-					+ yesterday.matter[i + 1]];
-			else if (i == today.size - 1)
-				gods_memory = rule[yesterday.matter[i - 1] * 4
-					+ yesterday.matter[i] * 2];
-			else
-				gods_memory = rule[yesterday.matter[i - 1] * 4
-					+ yesterday.matter[i] * 2
-					+ yesterday.matter[i + 1]];
-			today.matter[i++] = gods_memory;
-		}
+		today.matter = malloc(sizeof(int) * today.size);
+		dawn(&today, &yesterday, &gods_memory, rule);
 		tomorrow(atoms, today, rule, doomsday - 1);
 	}
+	if (today.matter)
+		free (today.matter);
 }
 
 t_world	str_to_world(char atoms[2], char *encoded_wolrd)
@@ -112,4 +100,27 @@ int	*int_to_rules(int encoded_rules)
 		i--;
 	}
 	return (rules);
+}
+
+void	dawn(t_world *today, t_world *yesterday, int *gods_memory, int *rule)
+{
+	int	i;
+
+	i = 0;
+	while (i < today->size)
+	{
+		if (i == 0 && i == today->size - 1)
+			*gods_memory = rule[yesterday->matter[i] * 2];
+		else if (i == 0)
+			*gods_memory = rule[yesterday->matter[i] * 2
+				+ yesterday->matter[i + 1]];
+		else if (i == today->size - 1)
+			*gods_memory = rule[yesterday->matter[i - 1] * 4
+				+ yesterday->matter[i] * 2];
+		else
+			*gods_memory = rule[yesterday->matter[i - 1] * 4
+				+ yesterday->matter[i] * 2
+				+ yesterday->matter[i + 1]];
+		today->matter[i++] = *gods_memory;
+	}
 }
